@@ -34,5 +34,8 @@ jobs:
       run: git clone https://github.com/blucobalt/jcef-builds.git source
     - name: cd 
       run: cd source
+    - name: ls
+      run: ls
     - name: bulid that bih
       run: python3 build-linux64.py
+    
