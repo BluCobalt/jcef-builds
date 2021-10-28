@@ -6,9 +6,9 @@ def run(command: str) -> None:
     os.system(command)
 
 
-# if os.path.exists("build/"):
-#     print("cleaning existing build directory")
-#     run("rm -r build/")
+if os.path.exists("build/"):
+    print("cleaning existing build directory")
+    run("rm -rf build/")
 
 run("mkdir build/")
 os.chdir("build")
@@ -22,9 +22,10 @@ os.chdir("src")
 run("mkdir jcef_build")
 os.chdir("jcef_build")
 print("generating cmake files")
-run("cmake -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Release ..")
+run("PYTHON_EXECUTABLE=\"/usr/bin/python2.7\" cmake -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Release ..")
 print("compiling")
 run(f"make -j{os.cpu_count()}")
+os.chdir("..")
 print("compiling java classes")
 os.chdir("tools")
 run("sh compile.sh linux64")
