@@ -18,7 +18,7 @@ jobs:
     - name: cd to jcef source
       run: cd src
     - name: cmake directories
-      run: mkdir jcef_build && jcef_build
+      run: mkdir jcef_build && cd jcef_build
     - name: cmake
       run: cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ..
     - name: build
