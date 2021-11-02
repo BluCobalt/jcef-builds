@@ -33,7 +33,7 @@ jobs:
         with: 
              python-version: 2.7.18 # optional, default is 3.x 
       - name: build
-        run: cd jcef-builds && win64.bat
+        run:  cmd /c "cd jcef-builds && win64.bat"
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
