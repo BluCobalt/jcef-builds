@@ -15,21 +15,8 @@ jobs:
       run: sudo sh -c "apt update -y && apt install build-essential libgtk2.0-dev -y"
     - name: clone jcef source
       run: git clone https://bitbucket.org/chromiumembedded/java-cef.git src
-    - name: cd to jcef source
-      run: cd src
-    - name: cmake directories
-      run: mkdir jcef_build && cd jcef_build
-    - name: cmake
-      run: cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ..
     - name: build
-      run: make -j4
-      # currently in src/jcef_build; have to go to src/tools
-    - name: cd to tools
-      run: cd ../tools
-    - name: compile java classes
-      run: sh compile.sh linux64
-    - name: make distribution
-      run: sh make_distrib.sh linux64
+      run: cd src && mkdir jcef_build && jcef_build && cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release .. && make -j4 && cd ../tools && sh compile.sh linux64 && sh make_distrib.sh linux64
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4
       with:
