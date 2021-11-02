@@ -1,14 +1,13 @@
 # This is a basic workflow that is manually triggered
 
-name: Manual workflow
+name: build
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
   workflow_dispatch
 jobs:
-  build:
-
+  linux64:
     runs-on: ubuntu-latest
     steps:
     - name: Install build deps
@@ -17,11 +16,35 @@ jobs:
       run: git clone https://bitbucket.org/chromiumembedded/java-cef.git src
     - name: build
       run: cd src && mkdir jcef_build && cd jcef_build && cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release .. && make -j4 && cd ../tools && sh compile.sh linux64 && sh make_distrib.sh linux64
+    - name: clean build
+      run: rm src/binary_distrib/linux64/*.sh src/binary_distrib/linux64/*.txt
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4
       with:
-       name: artifact
-       path: src/binary_distrib/*
+       name: linux64
+       path: src/binary_distrib/linux64
+  win64:
+    runs-on: windows-latest
+    steps:
+      - name: clone source
+        run: git clone https://github.com/BluCobalt/jcef-builds
+      - name: Setup Python
+        uses: actions/setup-python@v2.2.2
+        with: 
+             python-version: 2.7.18 # optional, default is 3.x 
+      - name: build
+        run: cd jcef-builds && win64.bat
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: linux64
+          path: jcef_builds/src/binary_distrib/win64
+             
+       
+
+
+        
+   
       
       
     
