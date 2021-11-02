@@ -16,7 +16,7 @@ jobs:
     - name: clone jcef source
       run: git clone https://bitbucket.org/chromiumembedded/java-cef.git src
     - name: build
-      run: cd src && mkdir jcef_build && jcef_build && cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release .. && make -j4 && cd ../tools && sh compile.sh linux64 && sh make_distrib.sh linux64
+      run: cd src && mkdir jcef_build && cd jcef_build && cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release .. && make -j4 && cd ../tools && sh compile.sh linux64 && sh make_distrib.sh linux64
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4
       with:
