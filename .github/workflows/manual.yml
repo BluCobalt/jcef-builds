@@ -32,6 +32,8 @@ jobs:
         uses: actions/setup-python@v2.2.2
         with: 
              python-version: 2.7.18 # optional, default is 3.x 
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
       - name: build
         run:  cmd /c "cd jcef-builds && win64.bat"
       - name: Upload a Build Artifact
