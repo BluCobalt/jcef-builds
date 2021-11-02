@@ -5,33 +5,36 @@ name: Manual workflow
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
-  workflow_dispatch:
-    # Inputs the workflow accepts.
-    inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
-        required: true
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+  workflow_dispatch
 jobs:
-  # This workflow contains a single job called "greet"
-  greet:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+  build:
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    runs-on: ubuntu-latest
     steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
     - name: Install build deps
       run: sudo sh -c "apt update -y && apt install build-essential libgtk2.0-dev -y"
-    - name: clone source
-      run: git clone https://github.com/blucobalt/jcef-builds.git source
-    - name: bulid that bih
-      run: sh -c "cd source && python3 build-linux64.py"
+    - name: clone jcef source
+      run: git clone https://bitbucket.org/chromiumembedded/java-cef.git src
+    - name: cd to jcef source
+      run: cd src
+    - name: cmake directories
+      run: mkdir jcef_build && jcef_build
+    - name: cmake
+      run: cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ..
+    - name: build
+      run: make -j4
+      # currently in src/jcef_build; have to go to src/tools
+    - name: cd to tools
+      run: cd ../tools
+    - name: compile java classes
+      run: sh compile.sh linux64
+    - name: make distribution
+      run: sh make_distrib.sh linux64
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.4
+      with:
+       name: artifact
+       path: src/binary_distrib/*
+      
+      
     
