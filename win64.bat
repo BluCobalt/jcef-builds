@@ -3,7 +3,7 @@ cd src
 mkdir jcef_build
 cd jcef_build
 cmake -G "Visual Studio 16 2019" -A x64 ..
-msbuild jcef.sln
+msbuild jcef.sln /property:Configuration=Release
 cd ..
 cd tools
 compile.bat win64
