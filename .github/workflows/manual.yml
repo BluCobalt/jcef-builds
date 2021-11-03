@@ -39,8 +39,8 @@ jobs:
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: linux64
-          path: D:\a\jcef-builds\jcef-builds\jcef-builds\src\binary-distrib\win64
+          name: win64
+          path: D:/a/jcef-builds/jcef-builds/jcef-builds/src/binary_distrib
              
        
 
