@@ -18,8 +18,8 @@ jobs:
         run:  cmd /c "cd jcef-builds && win64.bat"
       - name: make distrib
         run: cmd /c "cd jcef-builds/src && cd tools && make_distrib.bat win64"
-     # - name: Upload a Build Artifact
-     #   uses: actions/upload-artifact@v2.2.4
-     #   with:
-     #     name: win64
-     #     path: jcef-builds/src/binary_distrib
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: win64
+          path: jcef-builds/src/binary_distrib
