@@ -16,8 +16,6 @@ jobs:
       run: git clone https://bitbucket.org/chromiumembedded/java-cef.git src
     - name: build
       run: cd src && mkdir jcef_build && cd jcef_build && cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release .. && make -j4 && cd ../tools && sh compile.sh linux64 && sh make_distrib.sh linux64
-    - name: clean build
-      run: rm src/binary_distrib/linux64/*.sh src/binary_distrib/linux64/*.txt
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4
       with:
@@ -36,6 +34,8 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
       - name: build
         run:  cmd /c "cd jcef-builds && win64.bat"
+      - name: make distrib
+        run: cmd /c "cd jcef-builds/src && cd tools && make_distrib.bat win64"
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
