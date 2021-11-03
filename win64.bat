@@ -8,3 +8,4 @@ cd ..
 cd tools
 compile.bat win64
 make_distrib.bat win64
+cd ..
