@@ -1,0 +1,23 @@
+name: win64build
+
+on:
+  workflow_dispatch
+jobs:
+  win64:
+    runs-on: windows-latest
+    steps:
+      - name: clone source
+        run: git clone https://github.com/BluCobalt/jcef-builds
+      - name: Setup Python
+        uses: actions/setup-python@v2.2.2
+        with: 
+             python-version: 2.7.18 # optional, default is 3.x 
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+      - name: build
+        run:  cmd /c "cd jcef-builds && win64.bat"
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: win64
+          path: jcef-builds/src/binary_distrib
